@@ -9,9 +9,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-@Data
+
 public class HttpStatusChecker {
-    //private static final HttpClient CLIENT = HttpClient.newHttpClient();
     static final String BASE_URL = "https://http.cat/";
 
     public String getStatusImage(int code) throws IOException, InterruptedException {

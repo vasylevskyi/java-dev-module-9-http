@@ -6,6 +6,7 @@ public class App {
     public static void main(String[] args) throws IOException, InterruptedException {
         HttpStatusChecker statusChecker = new HttpStatusChecker();
         HttpStatusImageDownloader statusImageDownloader = new HttpStatusImageDownloader();
+        HttpImageStatusCli imageStatusCli = new HttpImageStatusCli();
 
         //Task 1.
 
@@ -18,7 +19,7 @@ public class App {
 
         // Task 3.
 
-
+        imageStatusCli.askStatus();
 
     }
 }
