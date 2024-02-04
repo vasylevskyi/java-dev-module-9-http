@@ -13,7 +13,7 @@ import java.net.http.HttpResponse;
 public class HttpStatusChecker {
     static final String BASE_URL = "https://http.cat/";
 
-    public String getStatusImage(int code) throws IOException, InterruptedException {
+    public String getStatusImage(int code) throws IOException, InterruptedException, PageNotFoundException {
         HttpClient httpClient = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -23,22 +23,15 @@ public class HttpStatusChecker {
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-        HttpStatusChecker checker = new HttpStatusChecker();
+        validateResponseCode(code, response.statusCode());
 
-        try {
-            checker.validateResponseCode(code, response.statusCode());
-        } catch (PageNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
-        String url = String.format("%s%d.jpg", BASE_URL, code);
-
-        return url;
+        return String.format("%s%d.jpg", BASE_URL, code);
     }
 
     public void validateResponseCode(int pageId, int responseCode) throws PageNotFoundException {
         if (responseCode == 404) {
-            throw new PageNotFoundException("Page with pageId = " + pageId + " does not exist!");
+            System.out.println("Page with pageId = " + pageId + " does not exist!");
+            throw new PageNotFoundException();
         }
     }
 }

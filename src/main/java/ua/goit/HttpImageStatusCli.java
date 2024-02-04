@@ -1,5 +1,7 @@
 package ua.goit;
 
+import ua.goit.exceptions.PageNotFoundException;
+
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -10,24 +12,22 @@ public class HttpImageStatusCli {
         int inputCode = -1;
         boolean continueInput = true;
         Scanner scanner = new Scanner(System.in);
-        HttpStatusChecker statusChecker = new HttpStatusChecker();
         HttpStatusImageDownloader statusImageDownloader = new HttpStatusImageDownloader();
 
         do {
             try {
                 System.out.print("Enter HTTP status code: ");
                 inputCode = scanner.nextInt();
+                statusImageDownloader.downloadStatusImage(inputCode);
                 continueInput = false;
             } catch (InputMismatchException ex) {
                 System.out.println("Please enter valid number");
                 scanner.nextLine();
-            }
-            if (statusChecker.getStatusImage(inputCode) == null) {
+            } catch (PageNotFoundException ex) {
                 System.out.println("There is not image for HTTP status " + inputCode);
-                continueInput = true;
-            } else {
-                statusImageDownloader.downloadStatusImage(inputCode);
+                scanner.nextLine();
             }
         } while (continueInput);
+        scanner.close();
     }
 }

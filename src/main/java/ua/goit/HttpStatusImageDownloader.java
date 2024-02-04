@@ -1,5 +1,7 @@
 package ua.goit;
 
+import ua.goit.exceptions.PageNotFoundException;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -11,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class HttpStatusImageDownloader {
-    void downloadStatusImage(int code) throws IOException, InterruptedException {
+    void downloadStatusImage(int code) throws IOException, InterruptedException, PageNotFoundException {
         HttpStatusChecker statusChecker = new HttpStatusChecker();
         
         HttpClient httpClient = HttpClient.newHttpClient();
